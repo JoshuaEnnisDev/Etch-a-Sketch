@@ -1,3 +1,5 @@
+let count = 0;
+
 function createGrid(gridSize)
 {
     body = document.querySelector('.main');
@@ -39,13 +41,34 @@ function setGridBtnListener()
 
 function setBlockListeners()
 {
+    count++;
+    console.log(count);
     let blocks = document.querySelectorAll('.clickable');
-
-    blocks.forEach(block => {block.addEventListener('mouseover', (e) => {
-        if(e.buttons === 1)
-            block.classList.add('colorChanged');
+    let mouseDown = false;
+    blocks.forEach(block => {block.addEventListener('mousedown', (e) => {
+    
+         mouseDown = true;
+         block.classList.add('mousedown');
+        });
     });
-});
+
+    blocks.forEach(block => {block.addEventListener('mouseup', (e) => {
+    
+        mouseDown = false;
+        block.classList.remove('mousedown');
+        });
+    });
+   
+    blocks.forEach(block => {block.addEventListener('mouseover', (e) => {
+    
+            if (mouseDown == true)
+            {
+                
+                block.classList.add('colorChanged');
+            }
+            
+        });
+    });
 }
 
 function clearGrid()
@@ -58,6 +81,12 @@ function clearGrid()
     });
 
 }
+
+function setEraseBtn()
+{
+
+}
+
 
 // runs the program.
 createGrid(16);
